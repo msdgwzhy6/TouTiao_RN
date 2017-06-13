@@ -20,7 +20,8 @@ export default class MainTab extends Component {
         super(props);
         this.state = {
             selectedTab:'首页'
-        }
+        };
+        global.appNavigator = this.props.navigation;
     }
     render() {
         return (
@@ -44,9 +45,8 @@ export default class MainTab extends Component {
                 selectedTitleStyle={styles.selectedTabText}
                 renderIcon={() => <Image style={styles.icon} source={icon} />}
                 renderSelectedIcon={() => <Image style={styles.icon} source={selectedIcon} />}
-                onPress={() => this.setState({ selectedTab: tabName })}
-            >
-                <Component appNavigator={this.props.navigation}/>
+                onPress={() => this.setState({ selectedTab: tabName })}>
+                <Component/>
             </TabNavigator.Item>
         )
 

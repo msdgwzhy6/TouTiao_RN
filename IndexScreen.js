@@ -28,13 +28,13 @@ export default class IndexScreen extends Component {
                     tabBarActiveTextColor="#ee1111"
                     tabBarInactiveTextColor="#000000"
                     renderTabBar={() => <ScrollableTabBar style={styles.tabBar}/>}>
-                    <ListScreen appNavigator = {this.props.appNavigator} screenProps={{type:'Multiple'}} type="Multiple" tabLabel="综合"/>
-                    <ListScreen appNavigator = {this.props.appNavigator} screenProps={{type:'Internal'}} type="Internal" tabLabel="国内"/>
-                    <ListScreen appNavigator = {this.props.appNavigator} screenProps={{type:'International'}} type="International" tabLabel="国际"/>
-                    <ListScreen appNavigator = {this.props.appNavigator} screenProps={{type:'English'}} type="English" tabLabel="英语"/>
-                    <ListScreen appNavigator = {this.props.appNavigator} screenProps={{type:'Japanese'}} type="Japanese" tabLabel="日语"/>
-                    <ListScreen appNavigator = {this.props.appNavigator} screenProps={{type:'Korean'}} type="Korean" tabLabel="韩语"/>
-                    <ListScreen appNavigator = {this.props.appNavigator} screenProps={{type:'Russian'}} type="Russian" tabLabel="俄语"/>
+                    <ListScreen screenProps={{type:'Multiple'}} type="Multiple" tabLabel="综合"/>
+                    <ListScreen screenProps={{type:'Internal'}} type="Internal" tabLabel="国内"/>
+                    <ListScreen screenProps={{type:'International'}} type="International" tabLabel="国际"/>
+                    <ListScreen screenProps={{type:'English'}} type="English" tabLabel="英语"/>
+                    <ListScreen screenProps={{type:'Japanese'}} type="Japanese" tabLabel="日语"/>
+                    <ListScreen screenProps={{type:'Korean'}} type="Korean" tabLabel="韩语"/>
+                    <ListScreen screenProps={{type:'Russian'}} type="Russian" tabLabel="俄语"/>
                 </ScrollableTabView>
             </View>
         );

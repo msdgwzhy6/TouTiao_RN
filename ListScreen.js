@@ -6,7 +6,8 @@ import {
     View,
     FlatList,
     Image,
-    ToastAndroid
+    ToastAndroid,
+    RefreshControl
 } from 'react-native';
 
 export default class ListScreen extends Component {
@@ -90,10 +91,20 @@ export default class ListScreen extends Component {
                 <FlatList
                     data={this.state.dataList}
                     renderItem={({item}) => this._renderItem(item)}
-                    onRefresh={()=>this._onRefresh()}
-                    refreshing={this.state.refreshing}
+                    //onRefresh={()=>this._onRefresh()}
+                    //refreshing={this.state.refreshing}
                     onEndReached={()=>this._onEndReached()}
                     onEndReachedThreshold='0.5'
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this._onRefresh.bind(this)}
+                            title="Pull to refresh"
+                            colors={['#ee1111']}
+                            tintColor="#fff"
+                            titleColor="#fff"
+                        />
+                    }
                 />
             </View>
         );
@@ -119,7 +130,8 @@ export default class ListScreen extends Component {
     }
 
     _itemPressed(item) {
-        this.props.appNavigator.navigate('Detail', item);
+        // this.props.appNavigator.navigate('Detail', item);
+        global.appNavigator.navigate('Detail', item);
     }
 
     _onRefresh() {
@@ -134,6 +146,7 @@ export default class ListScreen extends Component {
 
     _onEndReached() {
         ToastAndroid.show('loadmore', ToastAndroid.SHORT);
+        this.forceUpdate();
     }
 }
 
