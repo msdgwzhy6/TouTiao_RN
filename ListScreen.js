@@ -7,8 +7,10 @@ import {
     FlatList,
     Image,
     ToastAndroid,
-    RefreshControl
+    RefreshControl,
+    ActivityIndicator
 } from 'react-native';
+import LoadMoreFooter from './LoadMoreFooter';
 
 export default class ListScreen extends Component {
     constructor(props) {
@@ -79,6 +81,7 @@ export default class ListScreen extends Component {
                 title: 'wqeqwew',
                 pictures: ['http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg']
             }],
+            canLoadMore:true,
             loading: false,
             currentPosition: 0,
             refreshing: false,
@@ -89,12 +92,14 @@ export default class ListScreen extends Component {
         return (
             <View style={styles.container}>
                 <FlatList
+                    ref={(flatList)=>{this.flatList=flatList}}
                     data={this.state.dataList}
                     renderItem={({item}) => this._renderItem(item)}
                     //onRefresh={()=>this._onRefresh()}
                     //refreshing={this.state.refreshing}
                     onEndReached={()=>this._onEndReached()}
-                    onEndReachedThreshold='0.5'
+                    onEndReachedThreshold='1'
+                    ListFooterComponent={this.state.loading ? LoadMoreFooter : null}
                     refreshControl={
                         <RefreshControl
                             refreshing={this.state.refreshing}
@@ -140,13 +145,48 @@ export default class ListScreen extends Component {
         });
         ToastAndroid.show('refresh', ToastAndroid.SHORT);
         setTimeout(() => {
-            this.setState({refreshing: false})
+            this.setState({
+                refreshing: false,
+                dataList: [{
+                    key: 111,
+                    title: 'extra',
+                    pictures: ['http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg']
+                }, {
+                    key: 222,
+                    title: 'extra2',
+                    pictures: ['http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg', 'http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg']
+                }, {
+                    key: 333,
+                    title: 'extra3',
+                    pictures: ['http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg', 'http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg', 'http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg']
+                },]
+            });
         }, 3000);
     }
 
     _onEndReached() {
-        ToastAndroid.show('loadmore', ToastAndroid.SHORT);
-        this.forceUpdate();
+        if (!this.state.canLoadMore || this.state.refreshing || this.state.loading) {
+            return;
+        }
+
+        this.setState({
+            loading: true
+        });
+
+        ToastAndroid.show('loading', ToastAndroid.SHORT);
+        setTimeout(()=>{
+            let newList = this.state.dataList.splice(0);
+            newList.push({
+                key: 111,
+                title: 'extra',
+                pictures: ['http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg']
+            });
+            this.setState({
+                loading:false,
+                dataList:newList
+            });
+        },3000);
+
     }
 }
 
