@@ -12,6 +12,7 @@ import IndexScreen from './IndexScreen';
 import VideoScreen from './VideoScreen';
 import WttScreen from './WttScreen';
 import UserScreen from './UserScreen';
+import NewsTab from './NewsTab';
 
 
 // const MainTabold = TabNavigator({
@@ -145,4 +146,4 @@ const styles = StyleSheet.create({
     },
 });
 
-AppRegistry.registerComponent('TouTiao', () => AppNavigator);
+AppRegistry.registerComponent('TouTiao', () => MainTab);
