@@ -8,7 +8,8 @@ import {
     Image,
     ToastAndroid,
     RefreshControl,
-    ActivityIndicator
+    ActivityIndicator,
+    TouchableNativeFeedback
 } from 'react-native';
 import LoadMoreFooter from './LoadMoreFooter';
 
@@ -81,7 +82,7 @@ export default class ListScreen extends Component {
                 title: 'wqeqwew',
                 pictures: ['http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg']
             }],
-            canLoadMore:true,
+            canLoadMore: true,
             loading: false,
             currentPosition: 0,
             refreshing: false,
@@ -111,6 +112,7 @@ export default class ListScreen extends Component {
                         />
                     }
                 />
+
             </View>
         );
     }
@@ -118,13 +120,17 @@ export default class ListScreen extends Component {
     _renderItem(item) {
         let imagesComponents = item.pictures.map(url => this._renderImage(url));
 
-        return (<View style={styles.itemContainer}>
-
-            <Text style={styles.title} onPress={()=>this._itemPressed(item)}>{item.title}</Text>
-            <View style={styles.imagesContainer}>
-                {imagesComponents}
-            </View>
-        </View>);
+        return (
+            <TouchableNativeFeedback onPress={()=>this._itemPressed(item)}
+                                     background={TouchableNativeFeedback.SelectableBackground()}>
+                <View style={styles.itemContainer}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <View style={styles.imagesContainer}>
+                        {imagesComponents}
+                    </View>
+                </View>
+            </TouchableNativeFeedback>
+        );
 
     }
 
@@ -174,7 +180,7 @@ export default class ListScreen extends Component {
         });
 
         ToastAndroid.show('loading', ToastAndroid.SHORT);
-        setTimeout(()=>{
+        setTimeout(() => {
             let newList = this.state.dataList.splice(0);
             newList.push({
                 key: 111,
@@ -182,10 +188,10 @@ export default class ListScreen extends Component {
                 pictures: ['http://wx2.sinaimg.cn/bmiddle/006qRazely1fgfsx6cv7gj30sg0g04bi.jpg']
             });
             this.setState({
-                loading:false,
-                dataList:newList
+                loading: false,
+                dataList: newList
             });
-        },3000);
+        }, 3000);
 
     }
 }
