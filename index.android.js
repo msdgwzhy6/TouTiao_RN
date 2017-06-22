@@ -146,4 +146,4 @@ const styles = StyleSheet.create({
     },
 });
 
-AppRegistry.registerComponent('TouTiao', () => MainTab);
+AppRegistry.registerComponent('TouTiao', () => AppNavigator);
